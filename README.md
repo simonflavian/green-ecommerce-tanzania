@@ -4,15 +4,23 @@ A modern, responsive e-commerce website for eco-friendly products in Tanzania, b
 
 ## Features
 
-✅ **Mobile-First Design** - Fully responsive across all devices
-✅ **Product Catalog** - Browse eco-friendly products with search and filtering
-✅ **Shopping Cart** - Add/remove items with real-time updates
-✅ **TSH Pricing** - All prices displayed in Tanzanian Shillings
-✅ **Product Categories** - Filter by Kitchen & Dining, Clothing, Electronics, etc.
+✅ **Mobile-First Design**
+- Fully responsive across all devices
+✅ **Product Catalog**
+ - Browse eco-friendly products with search and filtering
+✅ **Shopping Cart**
+- Add/remove items with real-time updates
+✅ **TSH Pricing**
+- All prices displayed in Tanzanian Shillings
+✅ **Product Categories**
+- Filter by Kitchen & Dining, Clothing, Electronics, etc.
 ✅ **Search Functionality** - Find products quickly
-✅ **Product Sorting** - Sort by price, name, featured items
-✅ **Toast Notifications** - User-friendly feedback
-✅ **About Page** - Company story and mission
+✅ **Product Sorting**
+- Sort by price, name, featured items
+✅ **Toast Notifications**
+- User-friendly feedback
+✅ **About Page**
+- Company story and mission
 
 ## Tech Stack
 
