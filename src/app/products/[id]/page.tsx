@@ -4,8 +4,9 @@ import Link from 'next/link'
 import ProductDetailClient from '@/components/product-detail-client'
 import { allProducts, Product } from '@/data/products'
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
-  const productId = parseInt(params.id);
+export default async function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
+  const productId = parseInt(resolvedParams.id);
   const product = allProducts.find((p: Product) => p.id === productId);
 
   if (!product) {
