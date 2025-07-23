@@ -1,5 +1,6 @@
 # green-ecommerce-tanzania
-# GreenStore Tanzania 🌱  A modern, responsive e-commerce website for eco-friendly products in Tanzania, built with Next.js and TypeScript.
+# GreenStore Tanzania 
+A modern, responsive e-commerce website for eco-friendly products in Tanzania, built with Next.js and TypeScript.
 
 ## Features  
 ✅ **Mobile-First Design** 
