@@ -1,7 +1,9 @@
 'use client'
 
+import Link from 'next/link'
 import { useCart } from '@/context/cart-context'
 import { Product } from '@/data/products'
+import { formatPrice } from '@/utils/format-price'
 
 interface ProductDetailClientProps {
   product: Product;
@@ -44,12 +46,12 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
             </p>
             
             <p style={{
-              fontSize: '24px',
+              fontSize: '28px',
               fontWeight: 'bold',
               color: 'var(--primary-700)',
               marginBottom: '24px'
             }}>
-              ${product.price}
+              {formatPrice(product.price)}
             </p>
             
             <p style={{
@@ -79,7 +81,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 Add to Cart
               </button>
               
-              <a 
+              <Link 
                 href="/products" 
                 className="btn"
                 style={{
@@ -92,7 +94,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
                 }}
               >
                 Back to Products
-              </a>
+              </Link>
             </div>
           </div>
         </div>

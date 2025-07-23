@@ -2,7 +2,9 @@
 
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import Link from 'next/link'
 import { useCart } from '@/context/cart-context'
+import { formatPrice } from '@/utils/format-price'
 
 export default function CartPage() {
   const { items, removeFromCart, getTotalPrice } = useCart();
@@ -31,13 +33,13 @@ export default function CartPage() {
               }}>
                 Add some eco-friendly products to get started!
               </p>
-              <a 
+              <Link 
                 href="/products" 
                 className="btn btn-primary"
                 style={{textDecoration: 'none'}}
               >
                 Shop Now
-              </a>
+              </Link>
             </div>
           </div>
         </main>
@@ -70,7 +72,7 @@ export default function CartPage() {
                 <div className="cart-item-details">
                   <h3>{item.name}</h3>
                   <p>Quantity: {item.quantity}</p>
-                  <p className="cart-item-price">${(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="cart-item-price">{formatPrice(item.price * item.quantity)}</p>
                 </div>
                 <button 
                   onClick={() => removeFromCart(item.id)}
@@ -84,7 +86,7 @@ export default function CartPage() {
 
           {/* Cart Summary */}
           <div className="cart-summary">
-            <h3>Total: ${getTotalPrice().toFixed(2)}</h3>
+            <h3>Total: {formatPrice(getTotalPrice())}</h3>
             <button className="btn btn-primary checkout-btn">
               Proceed to Checkout
             </button>

@@ -1,5 +1,6 @@
 import Header from '@/components/header'
 import Footer from '@/components/footer'
+import Link from 'next/link'
 
 export default function AboutPage() {
   return (
@@ -67,7 +68,7 @@ export default function AboutPage() {
                 color: 'var(--gray-600)'
               }}>
                 We believe that small changes in our daily choices can create a massive positive impact on our 
-                planet. From the bustling streets of Dar es Salaam to the serene landscapes of Arusha, we're 
+                planet. From the bustling streets of Dar es Salaam to the serene landscapes of Arusha, we&apos;re 
                 committed to bringing you products that are good for you and good for Mother Earth.
               </p>
             </div>
@@ -330,7 +331,7 @@ export default function AboutPage() {
           }}>
             Join thousands of Tanzanians making a positive impact on our environment
           </p>
-          <a 
+          <Link 
             href="/products" 
             className="btn"
             style={{
@@ -343,7 +344,7 @@ export default function AboutPage() {
             }}
           >
             Shop Now
-          </a>
+          </Link>
         </div>
       </section>
 
