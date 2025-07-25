@@ -1,7 +1,7 @@
-// app/login/page.tsx
+// app/login/login-component.tsx
 'use client'
 
-import { Suspense, useActionState, useEffect, useState } from 'react'
+import { useActionState, useEffect, useState } from 'react'
 import { login } from '@/app/auth/actions'
 import Link from 'next/link'
 import Header from '@/components/header'
@@ -10,8 +10,7 @@ import ToastNotification from '@/components/toast-notification'
 import { useSearchParams } from 'next/navigation'
 import { useAuth } from '@/context/auth-context'
 
-// Component that uses useSearchParams - must be wrapped in Suspense
-function LoginForm() {
+export default function LoginPageWithSearchParams() {
   const [state, formAction, isPending] = useActionState(login, null);
   const searchParams = useSearchParams();
   const registered = searchParams.get('registered');
@@ -36,7 +35,8 @@ function LoginForm() {
         setToastType('error');
         setShowToast(true);
       } else {
-        authLogin();
+        // If login was successful (though redirect handles this, for completeness)
+        authLogin(); // Update AuthContext state
       }
     }
   }, [state, authLogin]);
@@ -45,7 +45,7 @@ function LoginForm() {
     <>
       <Header />
       <main style={{
-        minHeight: 'calc(100vh - 128px)',
+        minHeight: 'calc(100vh - 128px)', // Adjust based on header/footer height
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -201,51 +201,5 @@ function LoginForm() {
         onClose={() => setShowToast(false)}
       />
     </>
-  )
-}
-
-// Loading fallback component
-function LoginLoading() {
-  return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'var(--gray-50)'
-    }}>
-      <div style={{
-        backgroundColor: 'var(--white)',
-        borderRadius: '12px',
-        boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-        padding: '40px',
-        textAlign: 'center'
-      }}>
-        <div style={{
-          display: 'inline-block',
-          width: '40px',
-          height: '40px',
-          border: '4px solid var(--gray-200)',
-          borderTop: '4px solid var(--primary-500)',
-          borderRadius: '50%',
-          animation: 'spin 1s linear infinite'
-        }}></div>
-        <p style={{
-          marginTop: '20px',
-          color: 'var(--gray-600)'
-        }}>
-          Loading login page...
-        </p>
-      </div>
-    </div>
-  )
-}
-
-// Main page component with Suspense boundary
-export default function LoginPage() {
-  return (
-    <Suspense fallback={<LoginLoading />}>
-      <LoginForm />
-    </Suspense>
   )
 }
