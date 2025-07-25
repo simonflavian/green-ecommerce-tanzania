@@ -2,6 +2,7 @@ import Header from '@/components/header'
 import Hero from '@/components/hero'
 import ProductCard from '@/components/product-card'
 import Footer from '@/components/footer'
+import NewsletterSignup from '@/components/newsletter-signup'
 import { featuredProducts } from '@/data/products'
 
 export default function Home() {
@@ -42,6 +43,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <NewsletterSignup />
       <Footer />
     </div>
   )

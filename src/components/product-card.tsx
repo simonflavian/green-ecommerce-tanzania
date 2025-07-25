@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { useCart } from '@/context/cart-context'
 import ToastNotification from './toast-notification'
-import { formatPrice } from '@/utils/format-price'
+import WishlistButton from './wishlist-button'
 
 export interface ProductCardProps {
   id: number;
@@ -18,10 +18,12 @@ export default function ProductCard({ id, name, price, image, description }: Pro
   const { addToCart } = useCart();
   const [showToast, setShowToast] = useState(false);
 
+  const product = { id, name, price, image, description };
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart({ id, name, price, image });
+    addToCart(product);
     setShowToast(true);
   };
 
@@ -37,7 +39,8 @@ export default function ProductCard({ id, name, price, image, description }: Pro
           cursor: 'pointer',
           height: '100%',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          position: 'relative'
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = 'translateY(-4px)';
@@ -47,6 +50,9 @@ export default function ProductCard({ id, name, price, image, description }: Pro
           e.currentTarget.style.transform = 'translateY(0)';
           e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
         }}>
+          
+          {/* Wishlist Button */}
+          <WishlistButton product={product} size="small" />
           
           <div style={{
             width: '100%',
@@ -92,17 +98,25 @@ export default function ProductCard({ id, name, price, image, description }: Pro
                 fontWeight: 'bold',
                 color: 'var(--primary-700)'
               }}>
-                {formatPrice(price)}
+                TSH {price.toLocaleString()}
               </span>
               
               <button 
                 className="btn btn-primary" 
                 style={{
                   padding: '8px 16px',
-                  fontSize: '14px'
+                  fontSize: '14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
                 }}
                 onClick={handleAddToCart}
               >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="9" cy="21" r="1"/>
+                  <circle cx="20" cy="21" r="1"/>
+                  <path d="m1 1 4 4 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
                 Add to Cart
               </button>
             </div>
@@ -111,9 +125,17 @@ export default function ProductCard({ id, name, price, image, description }: Pro
       </Link>
       
       <ToastNotification
-        message={`${name} added to cart!`}
+        message={`${name} added to your cart! 🛒`}
+        type="success"
         isVisible={showToast}
         onClose={() => setShowToast(false)}
+        actionButton={{
+          text: 'View Cart & Checkout',
+          onClick: () => {
+            window.location.href = '/cart';
+            setShowToast(false);
+          }
+        }}
       />
     </>
   )

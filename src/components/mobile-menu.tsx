@@ -2,133 +2,164 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useCart } from '@/context/cart-context'
+import { useWishlist } from '@/context/wishlist-context'
+import { useAuth } from '@/context/auth-context'
 
 export default function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  const { getTotalItems } = useCart();
+  const { getTotalItems: getWishlistItems } = useWishlist();
+  const { isLoggedIn } = useAuth();
 
   return (
     <>
-      {/* Hamburger Button */}
       <button 
-        onClick={toggleMenu}
-        style={{
-          display: 'none',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '32px',
-          height: '32px',
-          background: 'none',
-          border: 'none',
-          cursor: 'pointer',
-          padding: '4px'
-        }}
         className="mobile-menu-btn"
+        onClick={() => setIsOpen(!isOpen)}
       >
-        <span style={{
-          width: '20px',
-          height: '2px',
-          backgroundColor: 'var(--primary-700)',
-          marginBottom: '3px',
-          transition: 'all 0.3s',
-          transform: isOpen ? 'rotate(45deg) translate(5px, 5px)' : 'none'
-        }}></span>
-        <span style={{
-          width: '20px',
-          height: '2px',
-          backgroundColor: 'var(--primary-700)',
-          marginBottom: '3px',
-          transition: 'all 0.3s',
-          opacity: isOpen ? '0' : '1'
-        }}></span>
-        <span style={{
-          width: '20px',
-          height: '2px',
-          backgroundColor: 'var(--primary-700)',
-          transition: 'all 0.3s',
-          transform: isOpen ? 'rotate(-45deg) translate(7px, -6px)' : 'none'
-        }}></span>
+        ☰
       </button>
 
-      {/* Mobile Menu Overlay */}
       {isOpen && (
-        <div style={{
-          position: 'fixed',
-          top: '64px',
-          left: '0',
-          right: '0',
-          bottom: '0',
-          backgroundColor: 'rgba(0,0,0,0.5)',
-          zIndex: '999'
-        }} onClick={toggleMenu}>
-          <div style={{
-            backgroundColor: 'var(--white)',
-            padding: '20px',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-          }} onClick={(e) => e.stopPropagation()}>
-            <nav style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '16px'
-            }}>
+        <>
+          <div 
+            className="mobile-menu-overlay"
+            onClick={() => setIsOpen(false)}
+          />
+          <div className="mobile-menu">
+            <div className="mobile-menu-header">
+              <span className="mobile-menu-title">
+                Menu
+              </span>
+              <button 
+                onClick={() => setIsOpen(false)}
+                className="mobile-menu-close-btn"
+              >
+                ×
+              </button>
+            </div>
+
+            <nav className="mobile-nav-links">
               <Link 
                 href="/" 
-                style={{
-                  color: 'var(--gray-700)',
-                  textDecoration: 'none',
-                  padding: '12px 0',
-                  borderBottom: '1px solid var(--gray-200)',
-                  fontSize: '18px'
-                }}
-                onClick={toggleMenu}
+                onClick={() => setIsOpen(false)}
               >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9,22 9,12 15,12 15,22"/>
+                </svg>
                 Home
               </Link>
+              
               <Link 
                 href="/products" 
-                style={{
-                  color: 'var(--gray-700)',
-                  textDecoration: 'none',
-                  padding: '12px 0',
-                  borderBottom: '1px solid var(--gray-200)',
-                  fontSize: '18px'
-                }}
-                onClick={toggleMenu}
+                onClick={() => setIsOpen(false)}
               >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                  <line x1="3" x2="21" y1="6" y2="6"/>
+                  <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
                 Products
               </Link>
+              
               <Link 
                 href="/about" 
-                style={{
-                  color: 'var(--gray-700)',
-                  textDecoration: 'none',
-                  padding: '12px 0',
-                  borderBottom: '1px solid var(--gray-200)',
-                  fontSize: '18px'
-                }}
-                onClick={toggleMenu}
+                onClick={() => setIsOpen(false)}
               >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 16v-4"/>
+                  <path d="M12 8h.01"/>
+                </svg>
                 About
               </Link>
+              
               <Link 
                 href="/contact" 
-                style={{
-                  color: 'var(--gray-700)',
-                  textDecoration: 'none',
-                  padding: '12px 0',
-                  fontSize: '18px'
-                }}
-                onClick={toggleMenu}
+                onClick={() => setIsOpen(false)}
               >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
                 Contact
               </Link>
+
+              <div className="mobile-menu-utility-links">
+                {isLoggedIn ? (
+                  <Link 
+                    href="/account/dashboard" 
+                    onClick={() => setIsOpen(false)}
+                    className="mobile-menu-account-link"
+                  >
+                    <div className="mobile-menu-link-content">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                      </svg>
+                      My Account
+                    </div>
+                  </Link>
+                ) : (
+                  <Link 
+                    href="/login" 
+                    onClick={() => setIsOpen(false)}
+                    className="mobile-menu-account-link"
+                  >
+                    <div className="mobile-menu-link-content">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                        <polyline points="10 17 15 12 10 7"/>
+                        <line x1="15" x2="3" y1="12" y2="12"/>
+                      </svg>
+                      Login / Register
+                    </div>
+                  </Link>
+                )}
+
+                <Link 
+                  href="/wishlist" 
+                  onClick={() => setIsOpen(false)}
+                  className="mobile-menu-wishlist-link"
+                >
+                  <div className="mobile-menu-link-content">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                    Wishlist
+                  </div>
+                  {getWishlistItems() > 0 && (
+                    <span className="badge mobile-menu-badge">
+                      {getWishlistItems()}
+                    </span>
+                  )}
+                </Link>
+
+                <Link 
+                  href="/cart" 
+                  onClick={() => setIsOpen(false)}
+                  className="mobile-menu-cart-link"
+                >
+                  <div className="mobile-menu-link-content">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="9" cy="21" r="1"/>
+                      <circle cx="20" cy="21" r="1"/>
+                      <path d="m1 1 4 4 2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                    </svg>
+                    Shopping Cart
+                  </div>
+                  {getTotalItems() > 0 && (
+                    <span className="badge mobile-menu-badge">
+                      {getTotalItems()}
+                    </span>
+                  )}
+                </Link>
+              </div>
             </nav>
           </div>
-        </div>
+        </>
       )}
     </>
   )

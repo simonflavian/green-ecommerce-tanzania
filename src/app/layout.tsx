@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import { CartProvider } from "../context/cart-context";
+import { CartProvider } from "@/context/cart-context";
+import { WishlistProvider } from "@/context/wishlist-context";
+import { AuthProvider } from "@/context/auth-context"; // Import AuthProvider
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +18,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <CartProvider>
-          {children}
+          <WishlistProvider>
+            <AuthProvider> {/* Wrap children with AuthProvider */}
+              {children}
+            </AuthProvider>
+          </WishlistProvider>
         </CartProvider>
       </body>
     </html>

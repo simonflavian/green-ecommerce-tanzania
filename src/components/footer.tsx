@@ -83,7 +83,7 @@ export default function Footer() {
             fontSize: '14px',
             color: 'var(--primary-200)'
           }}>
-            © 2024 GreenStore. All rights reserved. | Made with 💚 for the planet
+            © 2025 GreenStore. All rights reserved. | Made with Simon Flavian 💚 for the planet
           </p>
         </div>
       </div>
